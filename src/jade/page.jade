@@ -1,0 +1,13 @@
+!!! 5
+html(lang="en")
+  head
+    title= title
+    link(rel='stylesheet', href='site.css')
+  body
+    div#page
+      div#content!= content
+      div#nav
+        ul
+          each pageUrl in pageUrls
+            li
+              a(href=pageUrl + '.html')= pageUrl

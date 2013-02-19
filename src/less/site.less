@@ -1,0 +1,46 @@
+@import 'solarized_dark';
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial;
+  background: #aaa;
+}
+
+#page {
+  max-width: 1100px;
+  margin: 0 auto;
+  > div {
+    padding: 1em 1%;
+  }
+  #content {
+    float: left;
+    width: 65%;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #fff;
+    > h1 {
+      margin-top: 0;
+    }
+    pre code {
+      padding: 2%;
+    }
+  }
+  #nav {
+    float: left;
+    width: 30%;
+    background: #eee;
+    ul {
+      font-size: 0.7em;
+      list-style: none;
+      &, li {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
