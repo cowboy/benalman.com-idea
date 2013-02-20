@@ -1,6 +1,25 @@
 @import 'bootstrap';
 @import 'solarized_dark';
 
+// debugging
+.debug(@tag: '', @bg: '#000') {
+  padding: 0 4px;
+  margin-right: 4px;
+  color: #fff;
+  content: @tag;
+  background: @bg;
+}
+
+#content {
+  h1:before { .debug('H1', #f00);  }
+  h2:before { .debug('H2', #0a0); }
+  h3:before { .debug('H3', #00f); }
+  h4:before { .debug('H4', #f0f); }
+  h5:before { .debug('H4', #0ff); }
+  p:before { .debug('P', #0aa); }
+  li:before { .debug('LI', #aa0); }
+}
+
 code {
   font-size: 14px;
 }
