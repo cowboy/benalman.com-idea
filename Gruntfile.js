@@ -112,8 +112,8 @@ module.exports = function(grunt) {
       var indexPost = massageIndex(indexPre, extras);
       grunt.file.write(path.join(f.dest, 'index.md'), indexPost);
       // logging
-      var log = false;
-      if (log && i === 176) {
+      var log = 0;
+      if (log && i === 141) {
         console.log('\n====== src YAML ======');
         console.log(grunt.file.read(path.join(f.src[0], 'meta.yaml')));
         console.log('\n====== dest YAML ======');
@@ -139,6 +139,7 @@ module.exports = function(grunt) {
   // massage index
   function massageIndex(s, o) {
     var orig = s;
+
     // Store <pre class="brush:js">...</pre> in external files.
     var i = 0;
     s = s.replace(/<pre(\b[^>]*)>\n*([\s\S]*?)\n*<\/pre>/gi, function(_, attrs, code) {
@@ -146,11 +147,30 @@ module.exports = function(grunt) {
       var lang = attrMatches && attrMatches[1] || 'XXX';
       i++;
       var filename = 'source' + (i < 10 ? '0' + i : i) + '.' + lang;
-      code = code.replace(/^ {2}/mg, '');
-      grunt.file.write(path.join(o.dest, filename), code + '\n');
+      // Remove whitespace-only lines.
+      code = code.replace(/^\s+$/mg, '');
+      // Find smallest shared indent.
+      var sharedIndent = Math.min.apply(null, code.split('\n').filter(function(s) {
+        // Ignore empty lines.
+        return s !== '';
+      }).map(function(s) {
+        return s.match(/^\s*/)[0].length;
+      }));
+      // Remove smallest shared indent.
+      if (sharedIndent > 0) {
+        code = code.replace(new RegExp('^ {' + sharedIndent + '}', 'mg'), '');
+      }
+      code += '\n';
+      grunt.file.write(path.join(o.dest, filename), code);
       return '<%= include(\'' + filename + '\') %>';
       // return '```' + lang + code + '```'
     });
+
+    // Fix indented lines starting with [
+    s = s.replace(/^[ \t]+\[/gm, function() {
+      return '[';
+    });
+
     // var matches = s.match(/<pre(\b[^>]*)>([\s\S]*?)</pre>/gi);
     // if (matches) {
     //   console.log(id);
@@ -187,6 +207,7 @@ module.exports = function(grunt) {
         // nothing
       })({
         title: title,
+        url: path.basename(f.src[0]),
         content: content,
         pageUrls: pageUrls,
       });

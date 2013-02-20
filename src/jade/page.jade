@@ -4,10 +4,14 @@ html(lang="en")
     title= title
     link(rel='stylesheet', href='site.css')
   body
-    div#page
-      div#content!= content
-      div#nav
-        ul
-          each pageUrl in pageUrls
-            li
-              a(href=pageUrl + '.html')= pageUrl
+    div.container-fluid
+      div.row-fluid
+        div#content.span9
+          //- p= url
+          div!= content
+        div#nav.span3
+          ul.nav.nav-list
+            li.nav-header Posts
+            each pageUrl in pageUrls
+              li(class=pageUrl === url ? 'active' : null)
+                a(href=pageUrl + '.html')= pageUrl
