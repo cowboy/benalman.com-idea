@@ -140,13 +140,19 @@ module.exports = function(grunt) {
   function massageIndex(s, o) {
     var orig = s;
 
-    // Store <pre class="brush:js">...</pre> in external files.
+    // INLINE SOURCE CODE -> EXTERNAL FILES
     var i = 0;
+    var logged, id = function() { if (!logged) { logged = 1; console.log(o.id); } };
+    // Find <pre class="brush:js">...</pre>.
     s = s.replace(/<pre(\b[^>]*)>\n*([\s\S]*?)\n*<\/pre>/gi, function(_, attrs, code) {
       var attrMatches = attrs.match(/brush:([a-z]+)/i);
       var lang = attrMatches && attrMatches[1] || 'XXX';
       i++;
       var filename = 'source' + (i < 10 ? '0' + i : i) + '.' + lang;
+      // Un-escape escaped html crap.
+      code = code.replace(/\&(\w+?);/g, function(_, k) {
+        return {lt: '<', gt: '>', quot: "'"}[k];
+      });
       // Remove whitespace-only lines.
       code = code.replace(/^\s+$/mg, '');
       // Find smallest shared indent.
@@ -163,7 +169,6 @@ module.exports = function(grunt) {
       code += '\n';
       grunt.file.write(path.join(o.dest, filename), code);
       return '<%= include(\'' + filename + '\') %>';
-      // return '```' + lang + code + '```'
     });
 
     // Fix indented lines starting with [
@@ -171,11 +176,6 @@ module.exports = function(grunt) {
       return '[';
     });
 
-    // var matches = s.match(/<pre(\b[^>]*)>([\s\S]*?)</pre>/gi);
-    // if (matches) {
-    //   console.log(id);
-    //   console.log(matches);
-    // }
     return s;
   }
 
