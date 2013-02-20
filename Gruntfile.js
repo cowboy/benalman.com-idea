@@ -12,9 +12,8 @@ module.exports = function(grunt) {
     },
     unzip: {
       content: {
-        files: [
-          {src: '<%= fetch.content.options.dest %>', dest: 'temp'}
-        ]
+        src: '<%= fetch.content.options.dest %>',
+        dest: 'temp',
       }
     },
     clean: {
