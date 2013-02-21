@@ -213,6 +213,7 @@ module.exports = function(grunt) {
       });
       grunt.file.write(f.dest, output);
     });
+    grunt.log.writeln('Built ' + this.files.length + ' files.');
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
