@@ -60,16 +60,27 @@ module.exports = function(grunt) {
       },
       'temp/www/site.css': 'src/less/site.less'
     },
+    connect: {
+      serve: {
+        options: {
+          port: 9001,
+          base: 'temp/www',
+        }
+      }
+    },
     watch: {
       less: {
+        options: {interrupt: true},
         files: ['src/less/**'],
         tasks: ['less'],
       },
       massage: {
+        options: {interrupt: true},
         files: ['tasks/massage.js'],
         tasks: ['in', 'build'],
       },
       build: {
+        options: {interrupt: true},
         files: ['src/jade/**', 'temp/massaged/**/*', 'tasks/build.js'],
         tasks: ['build'],
       },
@@ -82,6 +93,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('dl', ['clean:dl', 'fetch', 'unzip']);
@@ -90,5 +102,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('init', ['jshint', 'dl', 'in', 'out']);
 
-  grunt.registerTask('default', ['jshint', 'in', 'out', 'watch']);
+  grunt.registerTask('default', ['jshint', 'in', 'out', 'connect', 'watch']);
 };
