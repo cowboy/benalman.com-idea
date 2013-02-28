@@ -43,6 +43,7 @@ module.exports = function(grunt) {
         name = name.replace(/'/g, '');
         name = name.replace(/[:"!\(\)]+/g, '-');
         name = slug(name);
+        name = name.replace(/^-+|-+$/g, '');
         // toc.push({header: header, name: name});
         toc.push(new Array(depth - 1).join('  ') + '* [' + header + '](#' + name + ')');
         var anchor = '<a href="#' + name + '" name="' + name + '">' + header + '</a>';
