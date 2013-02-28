@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         var cmd = args.shift();
         var map = {
           toc: function() {
-            return marked(toc);
+            return '<div class="toc">' + marked(toc) + '</div>';
           },
           include: function(filename) {
             var src = grunt.file.read(path.join(f.src[0], filename));
