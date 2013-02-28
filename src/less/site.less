@@ -1,5 +1,6 @@
 @import 'bootstrap';
 @import 'solarized_dark';
+@import 'effects';
 @import 'debug';
 
 code {
@@ -27,7 +28,26 @@ html, body {
 #content {
   font-size: 16px;
   line-height: 1.6em;
+
+  h1, h2, h3, h4 {
+    [href^='#']:target {
+      .blink(0.5s, 2)
+    }
+  }
+  h1 {
+    margin-bottom: 1em;
+  }
+  h2 {
+    margin-top: 2em;
+  }
+  h3 {
+    margin-top: 1em;
+  }
+  p, li {
+    margin-bottom: 0.6em;
+  }
 }
+
 
 /*
 html, body {
