@@ -7,6 +7,10 @@ html(lang="en")
     div.container-fluid
       div.row-fluid
         div#content.span9
+          div.devel
+            form(action='/edit/' + url, target='devel-iframe')
+              button Edit
+            iframe(name='devel-iframe')
           //- p= url
           div!= content
         div#nav.span3

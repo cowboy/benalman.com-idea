@@ -65,6 +65,35 @@ module.exports = function(grunt) {
         options: {
           port: 9001,
           base: 'temp/www',
+          middleware: function(connect, options) {
+            return [
+              function(req, res, next) {
+                var parts = req.url.slice(1).split('/');
+                var actions = {
+                  edit: function(id) {
+                    id = id.replace(/\?.*/, '');
+                    grunt.log.ok('edit: ' + id);
+                    grunt.util.spawn({
+                      cmd: 'subl',
+                      args: [
+                        '-w',
+                        'temp/ba-export/' + id,
+                        'temp/massaged/' + id
+                      ]
+                    }, console.error);
+                  }
+                };
+                var action = parts.shift();
+                if (actions[action]) {
+                  actions[action].apply(null, parts);
+                } else {
+                  next();
+                }
+              },
+              connect.static(options.base),
+              connect.directory(options.base)
+            ];
+          },
         }
       }
     },
