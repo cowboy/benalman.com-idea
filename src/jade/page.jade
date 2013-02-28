@@ -10,8 +10,14 @@ html(lang="en")
           //- p= url
           div!= content
         div#nav.span3
+          if calloutIds.length > 0
+            ul.nav.nav-list
+              li.nav-header Callouts
+              each id in calloutIds
+                li(class=id === url ? 'active' : null)
+                  a(href=id + '.html')= id
           ul.nav.nav-list
-            li.nav-header Posts
-            each pageUrl in pageUrls
-              li(class=pageUrl === url ? 'active' : null)
-                a(href=pageUrl + '.html')= pageUrl
+            li.nav-header All Posts
+            each id in navIds
+              li(class=id === url ? 'active' : null)
+                a(href=id + '.html')= id
