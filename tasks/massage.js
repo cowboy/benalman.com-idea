@@ -18,7 +18,7 @@ module.exports = function(grunt) {
   function nav(pageid) {
     if (navIds.indexOf(pageid) === -1) {
       console.log(pageid);
-      navIds.unshift(pageid);
+      navIds.push(pageid);
     }
   }
   function writeNav() {
@@ -113,13 +113,29 @@ module.exports = function(grunt) {
     });
 
     // Replace manually-entered TOC with dynamic TOC.
-    var p = [
-      '2012-09-25-partial-application-in-javascript',
-      // '2010-03-28-jquery-special-events',
-    ];
-    if (p.indexOf(o.id) !== -1) {
-      s = s.replace(/(^\s*\*.*$\n)+/m, '$1\n\n<!-- toc -->\n\n');
+    function replaceTOC(s) {
+      return s.replace(/(^\s*\*.*$\n)+/m, '\n\n<!-- toc -->\n\n');
+    }
+
+    s = s.replace(/<a\s+([^>]*?)>/gi, function(_, attrs) {
+      if (/name=|href=['"]#/i.test(attrs)) {
+        nav(o.id);
+        console.log('>', attrs);
+      }
+      return _;
+      // return '<a debug ' + attrs + '>';
+    });
+
+    s = s.replace(/\((#.*?)\)|:\s+(#\w.*)/g, function(_) {
       nav(o.id);
+      console.log('>', _);
+      return _;
+    });
+
+    if (o.id === '2012-09-25-partial-application-in-javascript') {
+      s = replaceTOC(s);
+      s = s.replace(/^_(Note that because.*)_$/m, '*$1*');
+      // nav(o.id);
     }
 
     return s;
