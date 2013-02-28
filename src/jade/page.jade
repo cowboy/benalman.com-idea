@@ -8,7 +8,7 @@ html(lang="en")
       div.row-fluid
         div#content.span9
           div.devel
-            form(action='/edit/' + url, target='devel-iframe')
+            form(action='/edit/' + url, method='post', target='devel-iframe')
               button Edit
             iframe(name='devel-iframe')
           //- p= url

@@ -71,14 +71,15 @@ module.exports = function(grunt) {
                 var parts = req.url.slice(1).split('/');
                 var actions = {
                   edit: function(id) {
-                    id = id.replace(/\?.*/, '');
                     grunt.log.ok('edit: ' + id);
                     grunt.util.spawn({
                       cmd: 'subl',
                       args: [
                         '-w',
                         'temp/ba-export/' + id,
-                        'temp/massaged/' + id
+                        'temp/ba-export/' + id + '/index.md',
+                        'temp/massaged/' + id,
+                        'temp/massaged/' + id + '/index.md'
                       ]
                     }, console.error);
                   }
