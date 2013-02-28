@@ -1,3 +1,11 @@
+/*
+ * ba-content-massage
+ * http://benalman.com/
+ *
+ * Copyright (c) 2012 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ */
+
 'use strict';
 
 module.exports = function(grunt) {
