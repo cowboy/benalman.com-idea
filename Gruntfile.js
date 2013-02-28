@@ -129,7 +129,7 @@ module.exports = function(grunt) {
   grunt.registerTask('in', ['clean:massage', 'massage']);
   grunt.registerTask('out', ['clean:www', 'build', 'less']);
 
-  grunt.registerTask('init', ['jshint', 'dl', 'in', 'out']);
+  grunt.registerTask('init', ['dl', 'default']);
 
   grunt.registerTask('default', ['jshint', 'in', 'out', 'connect', 'watch']);
 };
