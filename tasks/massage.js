@@ -119,8 +119,8 @@ module.exports = function(grunt) {
 
     s = s.replace(/<a\s+([^>]*?)>/gi, function(_, attrs) {
       if (/name=|href=['"]#/i.test(attrs)) {
-        nav(o.id);
-        console.log('>', attrs);
+        // nav(o.id);
+        // console.log('>', attrs);
       }
       return _;
       // return '<a debug ' + attrs + '>';
@@ -128,11 +128,11 @@ module.exports = function(grunt) {
 
     s = s.replace(/\((#.*?)\)|:\s+(#\w.*)/g, function(_) {
       // nav(o.id);
-      console.log('>', _);
+      // console.log('>', _);
       return _;
     });
     s = s.replace(/##/, function(_) {
-      nav(o.id);
+      // nav(o.id);
       return _;
     });
 
