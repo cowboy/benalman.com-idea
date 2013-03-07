@@ -100,17 +100,14 @@ module.exports = function(grunt) {
     },
     watch: {
       less: {
-        options: {interrupt: true},
         files: ['src/less/**'],
         tasks: ['less'],
       },
       massage: {
-        options: {interrupt: true},
         files: ['tasks/massage.js'],
         tasks: ['in', 'build'],
       },
       build: {
-        options: {interrupt: true},
         files: ['src/jade/**', 'temp/massaged/**/*', 'tasks/build.js'],
         tasks: ['build'],
       },
