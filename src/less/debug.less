@@ -17,6 +17,27 @@
   li:before { .debug('LI', #a0a); }
 }
 
+h1, h2, h3, h4, li {
+  [href^='#'] {
+    &:after {
+      font-size: 12px;
+      line-height: 12px;
+      font-weight: 400;
+      color: #aaa;
+      content: attr(href);
+      white-space: pre;
+    }
+  }
+}
+
+li {
+  [href^='#'] {
+    &:after {
+      margin-left: 2px;
+    }
+  }
+}
+
 h1, h2, h3, h4 {
   [href^='#'] {
     top: -5px;
@@ -26,12 +47,6 @@ h1, h2, h3, h4 {
       left: 0;
       bottom: -1em;
       display: block;
-      font-size: 12px;
-      line-height: 12px;
-      font-weight: 400;
-      color: #aaa;
-      content: attr(href);
-      white-space: pre;
     }
   }
 }
@@ -71,8 +86,7 @@ p [name] {
   }
 }
 
-p [href^='#'],
-li [href^='#'] {
+p [href^='#'] {
   padding: 0 4px;
   color: #fff;
   background: #f00 !important;
