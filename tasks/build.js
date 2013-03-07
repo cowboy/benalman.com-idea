@@ -14,8 +14,7 @@ module.exports = function(grunt) {
 
   var jade = require('jade');
   var hljs = require('highlight.js');
-  var slug = require('slug');
-  var entities = require('entities');
+  var toc = require('toc');
 
   var marked = require('marked');
   marked.setOptions({});
@@ -34,31 +33,13 @@ module.exports = function(grunt) {
       s = marked(s);
 
       // Add anchor links to headers and build a TOC.
-      var toc = [];
-      s = s.replace(/(<h(\d)>)([^<]+)(<\/h\2>)/g, function(_, open, depth, header, close) {
-        depth = Number(depth);
-        if (depth === 1) { return _; }
-        var name = header.toLowerCase();
-        name = entities.decode(name);
-        name = name.replace(/'/g, '');
-        name = name.replace(/[:"!\(\)]+/g, '-');
-        name = slug(name);
-        name = name.replace(/^-+|-+$/g, '');
-        // toc.push({header: header, name: name});
-        toc.push(new Array(depth - 1).join('  ') + '* [' + header + '](#' + name + ')');
-        var anchor = '<a href="#' + name + '" name="' + name + '">' + header + '</a>';
-        return open + anchor + close;
-      });
-      toc = toc.join('\n');
+      s = toc.process(s);
 
       // Replace <!-- ??? --> comment directives with stuff.
       s = s.replace(/<!--\s*(.*?)\s*-->/g, function(_, args) {
         args = args.split(/\s+/);
         var cmd = args.shift();
         var map = {
-          toc: function() {
-            return '<div class="toc">' + marked(toc) + '</div>';
-          },
           include: function(filename) {
             var src = grunt.file.read(path.join(f.src[0], filename));
             var lang = path.extname(filename).slice(1);
