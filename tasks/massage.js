@@ -127,13 +127,18 @@ module.exports = function(grunt) {
     });
 
     s = s.replace(/\((#.*?)\)|:\s+(#\w.*)/g, function(_) {
-      nav(o.id);
+      // nav(o.id);
       console.log('>', _);
       return _;
     });
+    s = s.replace(/##/, function(_) {
+      nav(o.id);
+      return _;
+    });
 
+    s = s.replace(/(# .*)/i, '$1\n<!--toc-->\n');
     if (o.id === '2012-09-25-partial-application-in-javascript') {
-      s = replaceTOC(s);
+      // s = replaceTOC(s);
       s = s.replace(/^_(Note that because.*)_$/m, '*$1*');
       // nav(o.id);
     }
