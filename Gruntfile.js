@@ -108,7 +108,7 @@ module.exports = function(grunt) {
         tasks: ['in', 'build'],
       },
       build: {
-        files: ['src/jade/**', 'temp/massaged/**/*', 'tasks/build.js'],
+        files: ['src/jade/**', /* 'temp/massaged/** /*', */ 'tasks/build.js'],
         tasks: ['build'],
       },
     }
